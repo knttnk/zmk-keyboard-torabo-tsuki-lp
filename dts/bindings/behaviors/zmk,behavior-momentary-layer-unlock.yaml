@@ -1,0 +1,21 @@
+# SPDX-License-Identifier: GPL-2.0-or-later
+# copyright (C) 2026 knttnk
+
+# ビヘイビアmo_unlockのノードに書ける設定項目を定義する。
+# 実装はsrc/behavior_mo_unlock.cにある。
+
+description: |
+  Momentary layer that also deactivates the given layers when pressed.
+
+# CソースのDT_DRV_COMPATに書いたzmk_behavior_momentary_layer_unlockと対応する。
+compatible: "zmk,behavior-momentary-layer-unlock"
+
+# ZMK本体にある、パラメータを1つ取るビヘイビア共通の定義を読み込む。
+include: one_param.yaml
+
+properties:
+  # 押したときに無効にするレイヤーの番号。固定して使うレイヤーを書く。
+  unlock-layers:
+    type: array
+    required: true
+    description: Layers to deactivate when the behavior is pressed.

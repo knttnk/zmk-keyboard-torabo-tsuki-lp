@@ -1,0 +1,33 @@
+# SPDX-License-Identifier: GPL-2.0-or-later
+# copyright (C) 2026 knttnk
+
+# 入力プロセッサzip_hscroll_deadzoneのノードに書ける設定項目を定義する。
+# 実装はsrc/input_processor_deadzone.cにある。
+
+description: |
+  Input processor that replaces values smaller than the threshold with 0
+  for the given event codes. Values at or above the threshold pass unchanged.
+
+# CソースのDT_DRV_COMPATに書いたzmk_input_processor_deadzoneと対応する。
+compatible: "zmk,input-processor-deadzone"
+
+# ZMK本体にある、パラメータを取らない入力プロセッサ共通の定義を読み込む。
+include: ip_zero_param.yaml
+
+properties:
+  # 対象にする入力の種類。省略するとINPUT_EV_RELになる。
+  type:
+    type: int
+    description: Input event type to filter. Defaults to INPUT_EV_REL.
+
+  # 対象にする入力のコード。INPUT_REL_HWHEELなどを並べる。
+  codes:
+    type: array
+    required: true
+    description: Input event codes to filter.
+
+  # 値の大きさがこの閾値に満たないとき、値を0にする。
+  threshold:
+    type: int
+    required: true
+    description: Values whose magnitude is below this threshold are replaced with 0.

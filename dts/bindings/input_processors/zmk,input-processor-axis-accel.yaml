@@ -1,0 +1,30 @@
+# SPDX-License-Identifier: GPL-2.0-or-later
+# copyright (C) 2026 knttnk
+
+# 入力プロセッサzip_axis_accelのノードに書ける設定項目を定義する。
+# 実装はsrc/input_processor_axis_accel.cにある。
+
+description: |
+  Input processor that makes the pointer speed proportional to
+  (ball speed)^(5/4) per axis, by rewriting relative X/Y as
+  value * |value|^(1/4) * scale.
+
+# CソースのDT_DRV_COMPATに書いたzmk_input_processor_axis_accelと対応する。
+compatible: "zmk,input-processor-axis-accel"
+
+# ZMK本体にある、パラメータを取らない入力プロセッサ共通の定義を読み込む。
+# track-remaindersもこの定義に含まれている。
+include: ip_zero_param.yaml
+
+properties:
+  # 移動量が1のときのX方向の倍率。千分率で指定する。大きくするとポインタが速くなる。
+  x-scale-permille:
+    type: int
+    required: true
+    description: Gain for X at a movement of 1 count per report, in 1/1000.
+
+  # 移動量が1のときのY方向の倍率。千分率で指定する。
+  y-scale-permille:
+    type: int
+    required: true
+    description: Gain for Y at a movement of 1 count per report, in 1/1000.

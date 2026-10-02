@@ -5,7 +5,7 @@ include:
     artifact-name: torabo_tsuki_lp_left_peripheral
   - board: bmp_boost
     shield: torabo_tsuki_lp_right
-    snippet: "studio-rpc-usb-uart split-central input-trackball input-listener"
+    snippet: "studio-rpc-usb-uart split-central input-trackball input-listener knttnk-pointing"
     artifact-name: torabo_tsuki_lp_right_central
   - board: bmp_boost
     shield: settings_reset

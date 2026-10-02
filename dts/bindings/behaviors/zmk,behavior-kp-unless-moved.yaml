@@ -1,0 +1,22 @@
+# SPDX-License-Identifier: GPL-2.0-or-later
+# copyright (C) 2026 knttnk
+
+# ビヘイビアkp_unless_movedのノードに書ける設定項目を定義する。
+# 実装はsrc/behavior_kp_unless_moved.cにある。
+
+description: |
+  Key press that sends nothing when the trackball has moved by the threshold
+  or more while scrolling since the last layer activation.
+
+# CソースのDT_DRV_COMPATに書いたzmk_behavior_kp_unless_movedと対応する。
+compatible: "zmk,behavior-kp-unless-moved"
+
+# ZMK本体にある、パラメータを1つ取るビヘイビア共通の定義を読み込む。
+include: one_param.yaml
+
+properties:
+  # ボールの移動量の合計がこの値以上なら、キーを送らない。センサーの移動量で指定する。
+  motion-threshold:
+    type: int
+    required: true
+    description: Amount of trackball movement at or above which the key is not sent.

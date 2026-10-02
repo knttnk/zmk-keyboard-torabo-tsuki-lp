@@ -1,0 +1,80 @@
+// トラックボールの個人設定。knttnk/keyballのmykeymapと同じ動きに近づけている。
+// このスニペットは、build.yamlでinput-trackballとinput-listenerより後ろに指定する。
+// pointing_deviceはinput-trackballのスニペットが定義するので、先に読み込むと参照できない。
+
+#include <input/processors.dtsi>
+#include <dt-bindings/zmk/input_transform.h>
+#include <zephyr/dt-bindings/input/input-event-codes.h>
+// レイヤーの番号をキーマップと共有する。
+#include "../../config/layers.h"
+
+// センサーの解像度を、設定できる範囲で最も低い608CPIに固定する。
+// 下の倍率はすべて608CPIを前提に計算しているので、解像度を変えたら倍率も計算し直す。
+&pointing_device {
+    res-cpi = <608>;
+};
+
+/ {
+    // ポインタの速度を、トラックボールの速度の5/4乗に比例させる入力プロセッサ。
+    // 実装はsrc/input_processor_axis_accel.cにある。
+    zip_axis_accel: zip_axis_accel {
+        compatible = "zmk,input-processor-axis-accel";
+        #input-processor-cells = <0>;
+        // keyballは200CPIで8msごとに、移動量mをm×|m|^(1/4)へ書き換える。縦はさらに√2倍する。
+        // 608CPIで15msごとに報告するこのセンサーでは、次の倍率を掛けると同じ速度になる。
+        //   横: (200/608)^(5/4) × (8/15)^(1/4) = 0.213
+        //   縦: 0.213 × √2 = 0.301
+        // どちらも大きくするとポインタが速くなる。
+        x-scale-permille = <213>;
+        y-scale-permille = <301>;
+        // 倍率を掛けたときの端数を次回に持ち越す。低速でも移動量を失わない。
+        track-remainders;
+    };
+
+    // 閾値に満たない横スクロールを0にする入力プロセッサ。閾値以上の横スクロールはそのまま通す。
+    // 実装はsrc/input_processor_deadzone.cにある。
+    zip_hscroll_deadzone: zip_hscroll_deadzone {
+        compatible = "zmk,input-processor-deadzone";
+        #input-processor-cells = <0>;
+        type = <INPUT_EV_REL>;
+        codes = <INPUT_REL_HWHEEL>;
+        // センサーの報告1回あたりの横の移動量で指定する。報告は15msごとに届く。
+        // 小さくすると横スクロールが出やすくなり、大きくすると縦スクロールに混ざりにくくなる。
+        threshold = <8>;
+    };
+
+    // スクロール中のボールの移動量を数える入力プロセッサ。値は書き換えない。
+    // 親指キーを離したとき、数えた量が閾値以上なら無変換を送らない。
+    // 閾値はconfig/keymap.keymapのkp_unless_movedに書いている。
+    // 実装はsrc/input_processor_motion_meter.cにある。
+    zip_motion_meter: zip_motion_meter {
+        compatible = "zmk,input-processor-motion-meter";
+        #input-processor-cells = <0>;
+    };
+};
+
+// トラックボールの入力に適用する処理を、適用する順に並べる。
+// この指定はシールドの.overlayの指定を置き換えるので、XYの反転もここに書き直している。
+&pointing_listener {
+    input-processors = <&zip_xy_transform (INPUT_TRANSFORM_X_INVERT | INPUT_TRANSFORM_Y_INVERT)>,
+                       <&zip_axis_accel>;
+
+    // ナビゲーションかスクロール専用のレイヤーが有効な間は、上の処理の代わりにこの処理を適用する。
+    // 無変換の親指キーを押している間と、マウスのレイヤーでKを押している間がこれにあたる。
+    scroller {
+        layers = <L_NAV L_SCROLL>;
+        input-processors
+            = <&zip_motion_meter>
+            , <&zip_xy_transform (INPUT_TRANSFORM_X_INVERT | INPUT_TRANSFORM_Y_INVERT)>
+            // XとYの移動量を、横スクロールと縦スクロールに変える。
+            , <&zip_xy_to_scroll_mapper>
+            // ボールを手前に回したとき、画面が下へスクロールする向きにする。
+            , <&zip_scroll_transform INPUT_TRANSFORM_Y_INVERT>
+            , <&zip_hscroll_deadzone>
+            // keyballは200CPIの移動量8につき1ノッチ分スクロールする。
+            // ZMKのスムーズスクロールは16単位が1ノッチなので、608CPIでは 16 × 200 / (8 × 608) = 25/38 倍にする。
+            // 分子を大きくするとスクロールが速くなる。
+            , <&zip_scroll_scaler 25 38>
+            ;
+    };
+};

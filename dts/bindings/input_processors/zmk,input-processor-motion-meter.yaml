@@ -1,0 +1,15 @@
+# SPDX-License-Identifier: GPL-2.0-or-later
+# copyright (C) 2026 knttnk
+
+# 入力プロセッサzip_motion_meterのノードの種類を定義する。設定項目はない。
+# 実装はsrc/input_processor_motion_meter.cにある。
+
+description: |
+  Input processor that counts the amount of relative movement passing
+  through it, without changing the events.
+
+# CソースのDT_DRV_COMPATに書いたzmk_input_processor_motion_meterと対応する。
+compatible: "zmk,input-processor-motion-meter"
+
+# ZMK本体にある、パラメータを取らない入力プロセッサ共通の定義を読み込む。
+include: ip_zero_param.yaml
