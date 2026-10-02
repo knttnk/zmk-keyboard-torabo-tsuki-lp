@@ -1,5 +1,6 @@
 // レイヤーの番号。config/keymap.keymapのレイヤーの並び順と一致させる。
-// snippets/knttnk-pointing/knttnk-pointing.overlayからも読み込んでいる。
+// snippets/knttnk-pointing/knttnk-pointing.overlayでも、この番号を使っている。
+// 読み込むのはキーマップだけにする。2通りのパスから読み込むと、ビルドが止まる。
 // 0から3はknttnk/keyballのmykeymapと同じ番号にしている。
 
 #define L_BASE 0   /* 文字入力 */

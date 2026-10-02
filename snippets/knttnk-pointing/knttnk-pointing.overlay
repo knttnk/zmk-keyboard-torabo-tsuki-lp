@@ -5,8 +5,10 @@
 #include <input/processors.dtsi>
 #include <dt-bindings/zmk/input_transform.h>
 #include <zephyr/dt-bindings/input/input-event-codes.h>
-// レイヤーの番号をキーマップと共有する。
-#include "../../config/layers.h"
+
+// L_NAVなどのレイヤーの番号は、config/layers.hに書いている。
+// キーマップがこのファイルより先に読み込まれ、その中でlayers.hを読み込むので、ここでは読み込まない。
+// ここでも読み込むと、同じファイルを2通りのパスで参照することになり、ビルドが止まる。
 
 // センサーの解像度を、設定できる範囲で最も低い608CPIに固定する。
 // 下の倍率はすべて608CPIを前提に計算しているので、解像度を変えたら倍率も計算し直す。
