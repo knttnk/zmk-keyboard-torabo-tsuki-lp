@@ -75,8 +75,8 @@
 &kp ESC    &kp N1  &kp N2    &kp N3    &kp N4                 &kp N5                                    &kp N6                   &kp N7  &kp N8     &kp N9   &kp N0     &kp BSPC
 &kp TAB    &kp Q   &kp W     &kp E     &kp R                  &kp T                                     &kp Y                    &kp U   &kp I      &kp O    &kp P      &kp JP_MINS
 &kp LSHFT  &kp A   &kp S     &kp D     &kp F                  &kp G      &mo L_BT   &tog L_MOUSE        &kp H                    &kp J   &kp K      &kp L    &kp SEMI   &kp ENTER
-&kp LCTRL  &kp Z   &kp X     &kp C     &kp V                  &kp B      &mkp MCLK  &kp SPACE           &kp N                    &kp M   &kp COMMA  &kp DOT  &kp FSLH   &kp RSHFT
-&none      &none   &kp LWIN  &kp LALT  &lt_ime L_NAV JP_MHEN  &mkp LCLK  &mkp RCLK  &mo_unlock L_FN     &lt_ime L_MOUSE JP_HENK  &none   &none      &none    &kp RCTRL  &none
+&kp LCTRL  &kp Z   &kp X     &kp C     &kp V                  &kp B      &mkp MCLK  &mo_unlock L_FN     &kp N                    &kp M   &kp COMMA  &kp DOT  &kp FSLH   &kp RSHFT
+&none      &none   &kp LWIN  &kp LALT  &lt_ime L_NAV JP_MHEN  &mkp LCLK  &mkp RCLK  &kp SPACE           &lt_ime L_MOUSE JP_HENK  &none   &none      &none    &kp RCTRL  &none
             >;
         };
 
@@ -86,8 +86,8 @@
 &none   &none     &none      &none    &none   &none                   &none   &none        &kp JP_MINS  &kp JP_CIRC  &kp JP_YEN   &kp DEL
 &trans  &none     &kp PG_UP  &none    &none   &none                   &none   &none        &none        &kp JP_AT    &kp JP_LBRC  &none
 &trans  &kp HOME  &kp PG_DN  &kp END  &none   &none   &trans  &trans  &none   &none        &kp JP_SCLN  &kp JP_COLN  &kp JP_RBRC  &trans
-&trans  &none     &kp INS    &none    &none   &none   &trans  &none   &none   &kp JP_COMM  &kp JP_DOT   &kp JP_SLSH  &kp JP_BSLS  &trans
-&none   &none     &trans     &trans   &trans  &none   &none   &trans  &trans  &none        &none        &none        &trans       &none
+&trans  &none     &kp INS    &none    &none   &none   &trans  &trans  &none   &kp JP_COMM  &kp JP_DOT   &kp JP_SLSH  &kp JP_BSLS  &trans
+&none   &none     &trans     &trans   &trans  &none   &none   &none   &trans  &none        &none        &none        &trans       &none
             >;
         };
 
@@ -97,8 +97,8 @@
 &none   &kp F1   &kp F2   &kp F3  &kp F4  &kp F5                       &kp F6  &kp F7        &kp F8        &kp F9  &kp F10  &kp DEL
 &trans  &kp F11  &kp F12  &none   &none   &none                        &none   &kp C_BRI_UP  &kp C_VOL_UP  &none   &none    &trans
 &trans  &none    &none    &none   &none   &none     &trans    &trans   &none   &kp C_BRI_DN  &kp C_VOL_DN  &none   &none    &trans
-&trans  &none    &none    &none   &none   &none     &trans    &none    &none   &none         &kp C_MUTE    &none   &none    &trans
-&none   &none    &trans   &trans  &trans  &mkp MB4  &mkp MB5  &trans   &trans  &none         &none         &none   &trans   &none
+&trans  &none    &none    &none   &none   &none     &trans    &trans   &none   &none         &kp C_MUTE    &none   &none    &trans
+&none   &none    &trans   &trans  &trans  &mkp MB4  &mkp MB5  &none    &trans  &none         &none         &none   &trans   &none
             >;
         };
 
@@ -110,8 +110,8 @@
 &none   &none     &none     &none      &none   &none                        &none     &none      &none         &none      &none   &kp DEL
 &trans  &none     &kp UP    &none      &none   &kp KP_NUM                   &none     &none      &mkp MCLK     &none      &none   &trans
 &trans  &kp LEFT  &kp DOWN  &kp RIGHT  &none   &kp SLCK     &trans  &trans  &mkp MB4  &mkp LCLK  &mo L_SCROLL  &mkp RCLK  &none   &trans
-&trans  &none     &none     &none      &none   &kp JP_CAPS  &trans  &none   &mkp MB5  &none      &none         &none      &none   &trans
-&none   &none     &trans    &trans     &trans  &none        &none   &trans  &trans    &none      &none         &none      &trans  &none
+&trans  &none     &none     &none      &none   &kp JP_CAPS  &trans  &trans  &mkp MB5  &none      &none         &none      &none   &trans
+&none   &none     &trans    &trans     &trans  &none        &none   &none   &trans    &none      &none         &none      &trans  &none
             >;
         };
 
